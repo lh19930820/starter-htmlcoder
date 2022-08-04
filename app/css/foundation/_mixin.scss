@@ -1,0 +1,29 @@
+@mixin respond-to($breakpoint) {
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media (max-width: #{map-get($breakpoints, $breakpoint)}) {
+            @content;
+        }
+    } @else {
+        @warn "Error, no value could be retrieved from `#{$breakpoint}`. "
+				+ "Please make sure it is defined in `$breakpoints` map.";
+    }
+}
+
+@function _get-rem($size) {
+    @return $size/16 * 1rem;
+}
+// rem to vw, 1rem ~ 10px
+@function _get-vw($size, $viewport: 750) {
+    $rate: 100 / $viewport;
+    @return $rate * $size * 1vw * 10;
+}
+@function _get-percent($child, $parent) {
+    @return $child/$parent * 100%;
+}
+@function _get-line-height($size: 0, $line-height: 1) {
+    @if ($line-height== 1) {
+        @return 1;
+    } @else {
+        @return $line-height/$size;
+    }
+}
